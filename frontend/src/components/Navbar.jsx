@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link,useNavigate } from 'react-router-dom'
 import { Context } from "../index.js";
 import { toast } from "react-toastify";
@@ -10,6 +10,8 @@ function Navbar() {
 
   const { isAuthenticated, setIsAuthenticated, loading, setLoading, user } =
     useContext(Context);
+
+    const [refresh, setRefresh] = useState(false);
 
     const logoutHandler = async () => {
       setLoading(true);
@@ -23,6 +25,7 @@ function Navbar() {
             toast.success(res.data.message);
             setIsAuthenticated(false);
             setLoading(false);
+            setRefresh((prev) => !prev);
            
           });
       } catch (error) {
